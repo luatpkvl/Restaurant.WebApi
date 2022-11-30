@@ -1,0 +1,26 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Core/bin/Debug/netcoreapp3.1
+/Domain/bin/Debug/netcoreapp3.1
+/Domain/obj/Debug/netcoreapp3.1
+/Domain/obj
+/.vs/Repo.WebApi
+/Core/.vs/Core/v17
+/Core/obj/Debug/netcoreapp3.1
+/.vs/ProjectEvaluation
+
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+
+
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+/Domain.Shared/obj
+/.vs
