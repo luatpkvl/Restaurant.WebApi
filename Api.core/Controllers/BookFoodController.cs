@@ -1,5 +1,4 @@
-﻿using Core.UnitOfWorks;
-using Domain.Entities;
+﻿using Domain.Dto;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,17 +8,17 @@ namespace Repo.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    public class BookFoodController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        public BookFoodController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         [HttpGet]
-        public async Task<IReadOnlyList<Product>> Get()
+        public async Task<IReadOnlyList<BookFoodDto>> GetBooksFood(string securityCode)
         {
-            return await _unitOfWork.Products.GetAllAsync();
+            return await _unitOfWork.BookFoods.GetOrderFood(securityCode);
 
         }
 

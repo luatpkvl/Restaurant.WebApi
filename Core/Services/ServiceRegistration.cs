@@ -13,6 +13,8 @@ namespace Core.Services
         public static void AddInfraStructer(this IServiceCollection services)
         {
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IFoodRepository, FoodRepository>();
+            services.AddTransient<IBookFoodRepository, BookFoodRepository>();
             services.AddTransient<IAuthRepository, AuthRepository>();
             services.AddTransient<IMailContentRepo, MailContentRepo>();
             services.AddTransient<IMailSettingRepo, MailSettingRepo>();

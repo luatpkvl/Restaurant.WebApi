@@ -20,7 +20,7 @@ namespace Core.Repositories
         }
         public async Task<int> AddAsync(AuthEntity entity)
         {
-            var sql = "INSERT INTO account(username, password, securitycode,`role`) VALUES(@UserName, @Password, @SecurityCode, @Role);";
+            var sql = "INSERT INTO auth(UserID, FullName, UserName, Email, HashedKey, SaltKey, `Role`) VALUES(uuid(),@UserName, @UserName, @UserName, @HashedKey, @SaltKey, 2);";
             using (var connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
@@ -31,7 +31,7 @@ namespace Core.Repositories
 
         public async Task<AuthEntity> CheckExistUserName(string UseName)
         {
-            var sql = "Select * from auth where UserName = @UseName and ";
+            var sql = "Select * from auth where UserName = @UseName";
             using (var connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();

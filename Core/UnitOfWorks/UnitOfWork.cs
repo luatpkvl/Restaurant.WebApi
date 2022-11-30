@@ -7,17 +7,19 @@ namespace Core.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IProductRepository Products { get; set; }
         public IAuthRepository Auths { get; set; }
         public IMailContentRepo MailContents { get; set; }
         public IMailSettingRepo MailSettings { get; set; }
+        public IFoodRepository Foods { get; set; }
+        public IBookFoodRepository BookFoods { get; set; }
 
-        public UnitOfWork(IProductRepository productRepository, IAuthRepository authRepository, IMailContentRepo mailContents, IMailSettingRepo mailSettings)
+        public UnitOfWork( IAuthRepository authRepository, IMailContentRepo mailContents, IMailSettingRepo mailSettings, IFoodRepository foods, IBookFoodRepository bookFoods)
         {
-            Products = productRepository;
             Auths = authRepository;
             MailContents = mailContents;
             MailSettings = mailSettings;
+            Foods = foods;
+            BookFoods = bookFoods;
         }
     }
 }
