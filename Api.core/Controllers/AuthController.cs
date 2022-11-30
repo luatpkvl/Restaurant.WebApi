@@ -226,8 +226,8 @@ namespace Repo.WebApi.Controllers
 
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
-                new Claim(JwtRegisteredClaimNames.Sid, userInfo.Password),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Sid, userInfo.UserId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, userInfo.Role.ToString())
             };
 
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
@@ -253,7 +253,7 @@ namespace Repo.WebApi.Controllers
             {
                 if (userExist.HashedKey.Equals(UserCommon.CreateHashFromSaltAndPassword(userExist.SaltKey, login.Password)))
                 {
-                    user = new UserModel { Username = login.Username, Password = login.Password };
+                    user = new UserModel { Username = login.Username, Password = login.Password, UserId = userExist.Id,Role = userExist.Role };
                 }
             }
             return user;

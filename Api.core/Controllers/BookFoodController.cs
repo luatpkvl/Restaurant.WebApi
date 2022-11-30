@@ -1,7 +1,13 @@
 ﻿using Domain.Dto;
+using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Shared.Constants;
+using Domain.Shared.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Exchange.WebServices.Data;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Repo.WebApi.Controllers
@@ -15,12 +21,68 @@ namespace Repo.WebApi.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        [Authorize]
         [HttpGet]
-        public async Task<IReadOnlyList<BookFoodDto>> GetBooksFood(string securityCode)
+        public async Task<CustomResponseMessage> GetBooksFood()
         {
-            return await _unitOfWork.BookFoods.GetOrderFood(securityCode);
-
+            CustomResponseMessage responseMessage = new CustomResponseMessage();
+            string role = HttpContext.User.FindFirstValue(ContextConstant.Role);
+            string userId = HttpContext.User.FindFirstValue(ContextConstant.UserId);
+            if (role != RoleConstant.Admin)
+            {
+                responseMessage.StatusCode = System.Net.HttpStatusCode.Forbidden;
+                return responseMessage;
+            }
+            responseMessage.Data = await _unitOfWork.BookFoods.GetOrderFood(userId);
+            return responseMessage;
         }
 
+        [Authorize]
+        [HttpDelete]
+        public async Task<CustomResponseMessage> Delete(BookFoodEntity bookFood)
+        {
+            CustomResponseMessage responseMessage = new CustomResponseMessage();
+            string role = HttpContext.User.FindFirstValue(ContextConstant.Role);
+            string userId = HttpContext.User.FindFirstValue(ContextConstant.UserId);
+            if (role != RoleConstant.Admin)
+            {
+                responseMessage.StatusCode = System.Net.HttpStatusCode.Forbidden;
+                return responseMessage;
+            }
+            responseMessage.Data = await _unitOfWork.BookFoods.DeleteAsync(bookFood.Id);
+            return responseMessage;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<CustomResponseMessage> Insert(BookFoodEntity bookFood)
+        {
+            CustomResponseMessage responseMessage = new CustomResponseMessage();
+            string role = HttpContext.User.FindFirstValue(ContextConstant.Role);
+            string userId = HttpContext.User.FindFirstValue(ContextConstant.UserId);
+            if (role != RoleConstant.Admin)
+            {
+                responseMessage.StatusCode = System.Net.HttpStatusCode.Forbidden;
+                return responseMessage;
+            }
+            responseMessage.Data = await _unitOfWork.BookFoods.AddAsync(bookFood);
+            return responseMessage;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<CustomResponseMessage> Update(BookFoodEntity bookFood)
+        {
+            CustomResponseMessage responseMessage = new CustomResponseMessage();
+            string role = HttpContext.User.FindFirstValue(ContextConstant.Role);
+            string userId = HttpContext.User.FindFirstValue(ContextConstant.UserId);
+            if (role != RoleConstant.Admin)
+            {
+                responseMessage.StatusCode = System.Net.HttpStatusCode.Forbidden;
+                return responseMessage;
+            }
+            responseMessage.Data = await _unitOfWork.BookFoods.UpdateAsync(bookFood);
+            return responseMessage;
+        }
     }
 }

@@ -42,13 +42,13 @@ namespace Core.Repositories
             }
         }
 
-        public async Task<IReadOnlyList<BookFoodDto>> GetOrderFood(string securityCode)
+        public async Task<IReadOnlyList<BookFoodDto>> GetOrderFood(string Id)
         {
             var sql = "select b.Id,a.Id as UserId,f.FoodName as FoodName,f.FoodPrice as FoodPrice,f.ImageLink as ImageLink,b.Quantity as Quantity from bookfood b  inner join auth a on a.Id  = b.UserId  inner join food f on b.FoodId  = f.Id  where a.Id  = @Id";
             using (var connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<BookFoodDto>(sql, new { securityCode = securityCode });
+                var result = await connection.QueryAsync<BookFoodDto>(sql, new { Id = Id });
                 return result.ToList();
             }
         }

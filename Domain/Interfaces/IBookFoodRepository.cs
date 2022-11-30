@@ -9,6 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IBookFoodRepository : IGenericRepository<BookFoodEntity>
     {
-        Task<IReadOnlyList<BookFoodDto>> GetOrderFood(string securityCode);
+        Task<IReadOnlyList<BookFoodDto>> GetOrderFood(string Id);
     }
 }
