@@ -23,6 +23,7 @@ namespace Repo.WebApi.Controllers
         }
         [Authorize]
         [HttpGet]
+        [Route("GetBooksFood")]
         public async Task<CustomResponseMessage> GetBooksFood()
         {
             CustomResponseMessage responseMessage = new CustomResponseMessage();
@@ -70,7 +71,7 @@ namespace Repo.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         public async Task<CustomResponseMessage> Update(BookFoodEntity bookFood)
         {
             CustomResponseMessage responseMessage = new CustomResponseMessage();
